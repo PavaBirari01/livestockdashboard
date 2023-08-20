@@ -7,9 +7,13 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardToDisplay from "../Components/CardToDisplay";
 import Header from "../Components/Header";
+import BasicChart from "../Components/BasicChart";
+import Stats from "../Components/Stats";
+import CandleChart from "../Components/CandleChart";
 
 const Home = () => {
   const [coinData, setCoinData] = useState({ Id: "bitcoin", Data: {} });
+
   useEffect(() => {
     fetchData();
   }, [coinData.Id]); // Fetch data when coinData.Id changes
@@ -19,7 +23,6 @@ const Home = () => {
     try {
       const data = await fetch(API);
       const jsonData = await data.json();
-      console.log(jsonData, "p1");
 
       setCoinData({ Id: coinData.Id, Data: jsonData });
     } catch (error) {
@@ -31,6 +34,7 @@ const Home = () => {
     const selectedCoinId = e.target.value;
     setCoinData({ Id: selectedCoinId, Data: {} });
   };
+
   return (
     <>
       <Box sx={{ height: 30 }} />
@@ -43,25 +47,47 @@ const Home = () => {
             handleCoinChange={handleCoinChange}
             selectedCoin={coinData.Id}
           />
-          <Box sx={{ height: 30 }} />
 
           {Object.keys(coinData.Data).length > 0 ? (
             <Grid container spacing={2}>
-              <CardToDisplay Data={coinData.Data} />
+              <Grid item xs={12}>
+                <CardToDisplay Data={coinData.Data} />
+              </Grid>
             </Grid>
           ) : (
             "Loading ..."
           )}
           <Box sx={{ height: 30 }} />
           <Grid container spacing={2}>
-            <Grid item xs={8}>
-              <Card sx={{ height: 60 + "vh" }}>
-                <CardContent>p</CardContent>
+            <Grid item xs={12} md={6}>
+              <Card sx={{ height: "60vh" }}>
+                <CardContent>
+                  <CandleChart />{" "}
+                </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={4}>
-              <Card sx={{ height: 60 + "vh" }}>
-                <CardContent></CardContent>
+            <Grid item xs={12} md={6}>
+              <Card sx={{ height: "60vh" }}>
+                <CardContent>
+                  <Stats Data={coinData.Data} />
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+          <Box sx={{ height: 30 }} />
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Card sx={{ height: "60vh" }}>
+                <CardContent>
+                  <BasicChart Data={coinData} />
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Card sx={{ height: "60vh" }}>
+                <CardContent>
+                  {/* <Stats Data={coinData.Data} /> */}
+                </CardContent>
               </Card>
             </Grid>
           </Grid>

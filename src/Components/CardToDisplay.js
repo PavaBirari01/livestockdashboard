@@ -9,7 +9,7 @@ const CardToDisplay = (props) => {
   const listItemData = [
     {
       text: "Market Cap 24 Hrs",
-      dataToDisplay: `${props.Data?.market_data?.market_cap_change_percentage_24h_in_currency?.inr} &`,
+      dataToDisplay: `${props.Data?.market_data?.market_cap_change_percentage_24h_in_currency?.inr} %`,
     },
     {
       text: "All Time High",
@@ -33,13 +33,11 @@ const CardToDisplay = (props) => {
     },
   ];
 
-  console.log("p2", props.Data.name);
-
   return (
     <>
       <Box sx={{ height: 60 }} />
       <Grid container spacing={2}>
-        <Card sx={{ width: "100%", height: 60 }}>
+        <Card sx={{ width: "100%", height: 60, marginLeft: 2 }}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {props.Data.name}
